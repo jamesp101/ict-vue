@@ -8,7 +8,6 @@
                         <img class="" src="https://meqasa.com/fascimos/somics/download2.png" alt />
                     </div>
 
-                    <form >
                         <b-field label="Login"/>
                         <b-input icon="account"
                                  value
@@ -31,7 +30,6 @@
                         <b-field label="" class="">
                             <b-button
                                 @click="userLogin"
-                                tag="input"
                                 type="is-primary"
                                 class="is-fullwidth is-medium"
                             > Login </b-button>
@@ -39,7 +37,6 @@
                         <b-field label="" class="has-text-centered">
                             <nuxt-link to="Login">Forgot Password?</nuxt-link>
                         </b-field>
-                    </form>
 
 
                 </div>
@@ -63,16 +60,39 @@
      },
      methods:{
          async userLogin(){
-             this.$axios.post('/auth/login',
-                              {
-                                  username: this.email,
-                                  password: this.password
-                              }
-             ).then(response => {
-                 console.log(response)
-             }).catch(err => console.log(err))
+             // this.$axios.post('/auth/login',
+             //                  {
+             //                      username: this.email,
+             //                      password: this.password
+             //                  }
+             // ).then(response => {
+             //     console.log(response)
+             // }).catch(err => console.log(err))
+             console.log(this.login)
+             try {
+                 await this.$auth.loginWith('local', {
+                     username: this.login.username,
+                    password: this.login.password
+                 })
+
+             }catch(e){
+                 console.log(e)
+             }
+         }
+
+     },
+     watch:{
+         internalValue(v){
+            this.$emit('input', v)
          }
      }
 
  }
 </script>
+
+<style scoped>
+img {
+  min-height: 250px;
+  min-width: 250px;
+}
+</style>

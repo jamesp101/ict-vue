@@ -51,7 +51,8 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost:8000'
+    baseURL: 'http://localhost:8000',
+    proxy: true
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -74,8 +75,7 @@ export default {
     stratigies: {
       local: {
         endpoints: {
-          login: { url: '/auth/login', method: 'post', propertyName: 'token' },
-          user: { url: '/accounts', method: 'get', propertName: false },
+          login: { url: 'http://localhost:8000/auth/login', method: 'post', propertyName: 'token' },
           logout: false
         }
       }
