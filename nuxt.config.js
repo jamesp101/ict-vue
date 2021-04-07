@@ -46,17 +46,32 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
 
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+
+    '@nuxtjs/proxy'
+
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    proxy: true,
-  },
-  proxy: {
-    '/api/': { target: 'http://localhost:8000', pathRewrite: { '^/api/': '' } }
-  },
+  // axios: {
+  //   proxy: true,
+  //   debug: true
+  // },
+  // axios: {
+  //   proxy: true
+  // },
+  // proxy: {
+  //   '/api': {
+  //     target: 'http://localhost:8000',
+  //     pathRewrite: { '^/api': '' }
+  //   }
+  // },
 
+
+  axios: {
+    baseURL: 'http://localhost:8000',
+
+  },
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
@@ -76,10 +91,12 @@ export default {
   auth: {
     strategies: {
       local: {
+        user: {
+          property: false, // <--- Default "user"
+        },
         endpoints: {
-          login: { url: '/auth/login', method: 'post', propertyName: 'data.token' },
-          user: { url: '/account', method: 'post', propertyName: 'data.username' },
-
+          login: { url: '/auth/login', method: 'post', propertyName: 'token' },
+          user: { url: '/account/', method: 'get', propertyName: false },
           logout: true
         }
       }

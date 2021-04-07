@@ -51,7 +51,6 @@
 </template>
 
 <script>
- import {ToastProgrammatic as Toast} from 'buefy'
 export default {
   head() {
     return {
@@ -60,40 +59,26 @@ export default {
   },
   data() {
     return {
-      login: { username: "", password: "" }
+      login: { username: "admin", password: "admin" }
     };
   },
   methods: {
-    async userLogin() {
-      // this.$axios.post('/auth/login',
-      //                  {
-      //                      username: this.email,
-      //                      password: this.password
-      //                  }
-      // ).then(response => {
-      //     console.log(response)
-      // }).catch(err => console.log(err))
-      console.log(this.login);
-      try {
-        const auth = await this.$auth.loginWith("local", {
-          username: this.login.username,
-          password: this.login.password
-        }).then(it=>{
-        console.log(it)
-        });
-        Toast.open(
-            {message: "Logged in!" ,
-            type: 'is-success'}
-        );
-        this.$router.push("app/dashboard");
-      } catch (e) {
-          Toast.open(
-              {message: "Username or password incorrect" ,
-              type: 'is-danger'}
-          );
-        console.log(e);
+       userLogin() {
+         this.$auth.loginWith("local", {data: this.login}) .then(it=>{
+
+            console.log("RESPONSE" , it)
+            this.$router.push("app");
+          })
+          .catch(err=>{
+              console.error(err)
+              this.$buefy.toast.open({
+                  duration: 5000,
+                  message: `Username or password not found`,
+                  position: 'is-bottom',
+                  type: 'is-danger'
+              })
+          })
       }
-    }
   },
   watch: {
     internalValue(v) {
@@ -103,9 +88,3 @@ export default {
 };
 </script>
 
-<style scoped>
-img {
-  min-height: 250px;
-  min-width: 250px;
-}
-</style>
