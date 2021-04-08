@@ -27,17 +27,39 @@
                    <b-menu-item icon="information-outline" label="Classroom"></b-menu-item>
                    </nuxt-link>
             </b-menu-list>-->
-            <li v-for="(item, key) of links" :key="key">
-              <nuxt-link :to="item.to" exact-active-class="is-active">
-                <b-icon :icon="item.icon" />
-                {{ item.title }}
-              </nuxt-link>
-            </li>
+            <!-- <li v-for="(item, key) of links" :key="key">
+                   <NuxtLink :to="item.to" exact-active-class="is-active">
+                   <b-icon :icon="item.icon" />
+                   {{ item.title }}
+                   </NuxtLink>
+            </li>-->
+            <b-menu-list label="Menu">
+              <li v-for="(item,key) of menu" :key="key">
+                <NuxtLink :to="item.to" exact-active-class="is-active">
+                  <b-icon :icon="item.icon" size="is-small" />
+                  <span>{{item.title}}</span>
+                </NuxtLink>
+              </li>
+            </b-menu-list>
+            <b-menu-list label="Account">
+              <li v-for="(item,key) of account" :key="key">
+                <NuxtLink :to="item.to" exact-active-class="is-active">
+                  <b-icon :icon="item.icon" size="is-small" />
+                  <span>{{item.title}}</span>
+                </NuxtLink>
+              </li>
+              <li>
+                <a @click="logout">
+                  <b-icon size="is-small" />
+                  <span>Logout</span>
+                </a>
+              </li>
+            </b-menu-list>
           </b-menu>
         </div>
       </b-sidebar>
 
-      <div class="p-1">
+      <div class="page">
         <Nuxt />
       </div>
     </section>
@@ -52,7 +74,7 @@ export default {
       mobile: "reduce",
       reduce: false,
       fullheight: true,
-      links: [
+      menu: [
         {
           title: "Dashboard",
           icon: "view-dashboard",
@@ -64,26 +86,40 @@ export default {
           to: "/app/classroom",
         },
       ],
+
+      account: [
+        {
+          title: "Profile",
+          icon: "view-dashboard",
+          to: "/app/profile",
+        },
+      ],
     };
   },
-  layout: "none",
+  methods: {
+    async logout() {
+      console.log("HELLO");
+      await this.$auth.logout();
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-.p-1 {
-  padding: 1em;
+.page {
+  width: 100%;
 }
 .sidebar-page {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  min-height: 100%;
-  // min-height: 100vh;
+  width: 100vw;
+  /* min-height: 100%; */
+  min-height: 100vh;
   .sidebar-layout {
     display: flex;
     flex-direction: row;
-    min-height: 100%;
+    height: 100vh;
     // min-height: 100vh;
   }
 }

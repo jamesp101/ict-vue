@@ -67,7 +67,7 @@ export default {
          this.$auth.loginWith("local", {data: this.login}) .then(it=>{
 
             console.log("RESPONSE" , it)
-            this.$router.push("app");
+            this.$router.push("app/dashboard");
           })
           .catch(err=>{
               console.error(err)

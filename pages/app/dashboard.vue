@@ -2,11 +2,7 @@
 <template>
   <div class="container">
     <h1>Hello</h1>
-    <div class="columns">
-      <div class="column" v-for="(sum, i) in summary" :key="i">
-        <CardSummary :desc="sum.desc" :num="sum.num" />
-      </div>
-    </div>
+    <div class="columns"></div>
   </div>
 </template>
 
@@ -24,6 +20,9 @@ export default {
         },
       ],
     };
+  },
+  head: {
+    title: "Dashboard",
   },
 };
 </script>

@@ -48,9 +48,15 @@ export default {
 
     '@nuxtjs/auth-next',
 
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+
+    '@nuxtjs/markdownit'
 
   ],
+
+  markdownit: {
+    runtime: true
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   // axios: {
@@ -69,7 +75,7 @@ export default {
 
 
   axios: {
-    baseURL: 'http://localhost:8000',
+    baseURL: 'http://127.0.0.1:8000',
 
   },
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -95,8 +101,8 @@ export default {
           property: false, // <--- Default "user"
         },
         endpoints: {
-          login: { url: '/auth/login', method: 'post', propertyName: 'token' },
-          user: { url: '/account/', method: 'get', propertyName: false },
+          login: { url: '/auth', method: 'post', propertyName: 'token' },
+          user: { url: '/auth', method: 'get', propertyName: false },
           logout: true
         }
       }
