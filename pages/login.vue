@@ -6,7 +6,7 @@
           <div class="box has-text-centered">
             <img
               class=""
-              src="https://meqasa.com/fascimos/somics/download2.png"
+              src="/bnhs-logo-128.png"
               alt
             />
           </div>

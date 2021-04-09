@@ -11,6 +11,10 @@
     "lint": "npm run lint:style",
     "test": "jest"
   },
+  "nuxt": {
+    "port": "8001",
+    "host": "0.0.0.0"
+  },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/auth-next": "5.0.0-1616003482.75c20e6",
@@ -20,7 +24,8 @@
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3",
-    "nuxt-buefy": "^0.4.4"
+    "nuxt-buefy": "^0.4.4",
+    "vue-moments-ago": "^0.2.0"
   },
   "devDependencies": {
     "@nuxtjs/stylelint-module": "^4.0.0",

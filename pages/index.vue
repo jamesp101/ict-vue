@@ -1,53 +1,39 @@
 <template>
-  <section class="section">
-    <div class="columns is-mobile">
-      <card
-        title="Free"
-        icon="github"
-      >
-        Open source on <a href="https://github.com/buefy/buefy">
-          GitHub
-        </a>
-      </card>
-
-      <card
-        title="Responsive"
-        icon="cellphone-link"
-      >
-        <b class="has-text-grey">
-          Every
-        </b> component is responsive
-      </card>
-
-      <card
-        title="Modern"
-        icon="alert-decagram"
-      >
-        Built with <a href="https://vuejs.org/">
-          Vue.js
-        </a> and <a href="http://bulma.io/">
-          Bulma
-        </a>
-      </card>
-
-      <card
-        title="Lightweight"
-        icon="arrange-bring-to-front"
-      >
-        No other internal dependency
-      </card>
+  <div>
+    <div class="hero is-fullheight">
+      <div class="hero-body columns is-centered">
+        <div class="column is-4 has-text-centered box">
+          <img src="/bnhs-logo-128.png" alt />
+          <h1>
+            <b>Bukidnon National High School</b>
+          </h1>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
-import Card from '~/components/Card'
-
 export default {
-  name: 'HomePage',
+  name: "HomePage",
 
-  components: {
-    Card
-  }
-}
+  _components: {},
+  get components() {
+    return this._components;
+  },
+  set components(value) {
+    this._components = value;
+  },
+};
 </script>
+
+<style scoped>
+.hero-body {
+  background-image: url("/bnhs.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  resize: both;
+}
+.myImage {
+}
+</style>

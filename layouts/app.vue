@@ -9,14 +9,13 @@
         :reduce="reduce"
         type="is-light"
         :fullheight="fullheight"
+        :expand-on-hover-fixed="expandOnHoverFixed"
         open
       >
         <div class="p-1">
-          <div class="block">
-            <img
-              src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
-              alt="Lightweight UI components for Vue.js based on Bulma"
-            />
+          <div class="block has-text-centered">
+            <!-- TODO: Insert profile image -->
+            <h1 class="is-size-5">{{ user.firstname + ' ' + user.lastname }}</h1>
           </div>
           <b-menu class="is-custom-mobile">
             <!-- <b-menu-list label="Menu">
@@ -41,6 +40,19 @@
                 </NuxtLink>
               </li>
             </b-menu-list>
+
+            <!-- Admin -->
+            <b-menu-list label="Admin" v-if="access == 4">
+              <li v-for="(item,key) of admin" :key="key">
+                <NuxtLink :to="item.to" exact-active-class="is-active">
+                  <b-icon :icon="item.icon" size="is-small" />
+                  <span>{{item.title}}</span>
+                </NuxtLink>
+              </li>
+            </b-menu-list>
+
+            <!-- Admin -->
+
             <b-menu-list label="Account">
               <li v-for="(item,key) of account" :key="key">
                 <NuxtLink :to="item.to" exact-active-class="is-active">
@@ -50,7 +62,7 @@
               </li>
               <li>
                 <a @click="logout">
-                  <b-icon size="is-small" />
+                  <b-icon icon="exit-to-app" size="is-small" />
                   <span>Logout</span>
                 </a>
               </li>
@@ -70,19 +82,22 @@
 export default {
   data() {
     return {
+      expandOnHoverFixed: true,
       expandOnHover: true,
       mobile: "reduce",
       reduce: false,
       fullheight: true,
+      user: {},
+      access: 1,
       menu: [
         {
-          title: "Dashboard",
+          title: "Dashboards",
           icon: "view-dashboard",
           to: "/app/dashboard",
         },
         {
           title: "Classroom",
-          icon: "view-dashboard",
+          icon: "google-classroom",
           to: "/app/classroom",
         },
       ],
@@ -90,10 +105,40 @@ export default {
       account: [
         {
           title: "Profile",
-          icon: "view-dashboard",
+          icon: "account",
           to: "/app/profile",
         },
       ],
+      admin: [
+        {
+          title: "User",
+          icon: "",
+          to: "app/admin/user",
+        },
+        {
+          title: "Classroom",
+          icon: "",
+          to: "app/admin/user",
+        },
+        {
+          title: "Classroom",
+          icon: "",
+          to: "app/admin/user",
+        },
+      ],
+    };
+  },
+  async created() {
+    this.access = this.$auth.$state.user.message.access;
+    const id = this.$auth.$state.user.message.id;
+    const res = await this.$axios.$get(`/account/${id}`);
+    console.log(res);
+    const response = res[0];
+    this.user = {
+      firstname: response.person.firstname,
+      lastname: response.person.lastname,
+      id: response._id,
+      access: response.access,
     };
   },
   methods: {
@@ -109,6 +154,7 @@ export default {
 <style lang="scss">
 .page {
   width: 100%;
+  max-height: 100%;
 }
 .sidebar-page {
   display: flex;

@@ -5,13 +5,15 @@
         <figure class="image is-48x48">
           <img alt src="https://bulma.io/images/placeholders/96x96.png" />
         </figure>
-        <div class="media-content">
-          <p class="title is-6">Teacher</p>
-          <p class="subtitle is-7">Date</p>
+        <div class="media-content ml-4">
+          <p class="title is-6">{{teacher}}</p>
+          <p class="subtitle is-7">
+            <vue-moments-ago prefix="posted" suffix="ago" :date="date" lang="en" />
+          </p>
         </div>
       </div>
       <div class="content">
-        <div class="markdown-content" v-html="hello"></div>
+        <div class="markdown-content" v-html="$md.render(desc)"></div>
         <p>Subject</p>
       </div>
       <div class="card-footer">
@@ -32,24 +34,32 @@
 
 <script>
 import samplemd from "~/static/README2.md";
+import PostComments from "./PostComments.vue";
+import VueMomentsAgo from "vue-moments-ago";
 
 export default {
+  components: { PostComments, VueMomentsAgo },
+  props: {
+    teacher: String,
+    date: String,
+    content: String,
+    subject: String,
+    comments: Array,
+    desc: String,
+  },
   data() {
     return {
-      isOpen: true,
+      isOpen: false,
     };
   },
   computed: {
     hello() {
-      return samplemd;
+      return this.title;
     },
   },
-  props: {
-    teacher: String,
-    subject: String,
-    date: String,
+  mounted() {
+    console.log(this.$props);
   },
-  methods: {},
 };
 </script>
 

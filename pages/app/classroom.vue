@@ -62,7 +62,7 @@ export default {
         title: it.subject,
         students: it.students.length,
         section: it.yearLevel + " " + it.section,
-        teacher: it.teacher,
+        teacher: it.teacher.person.firstname + " " + it.teacher.person.lastname,
         schedule: it.schedule.join(),
         yearLevel: it.yearLevel,
         to: it._id,
