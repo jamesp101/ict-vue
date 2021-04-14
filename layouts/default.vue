@@ -1,10 +1,9 @@
 <template>
   <div class="layout">
-    <b-navbar type="is-primary">
+    <b-navbar>
       <template #end>
-        <b-navbar-item class="buttons">
-          <nuxt-link to="/login"></nuxt-link>
-          <b-button></b-button>
+        <b-navbar-item>
+          <nuxt-link to="/login" class="button">Login</nuxt-link>
         </b-navbar-item>
       </template>
     </b-navbar>
@@ -14,10 +13,16 @@
 
 <script>
 export default {
-  auth: false,
   head: {
     title: "Bukidnon National High School",
   },
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+
+  async created() {},
 };
 </script>
 

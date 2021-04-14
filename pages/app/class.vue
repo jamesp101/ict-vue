@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="post-page">
     <app-navbar></app-navbar>
     <b-tabs v-model="activeTab" type="is-boxed" @input="tabChange">
       <b-tab-item label="Posts">
         <section class="section">
           <div class="columns is-multiline" v-if="!loadingPosts">
             <Post
-              class="column is-6 is-offset-1 mb-5"
+              class="column is-10 is-offset-1 mb-5"
               v-for="(item, itx) in posts"
               :key="itx"
               :date="item.postedDate"
@@ -18,7 +18,7 @@
           <skeleton-post class="loading-post" v-if="loadingPosts" />
           <div v-if="noPost">No Posts available</div>
         </section>
-        <div class="floating-button">
+        <div class="floating-button" v-if="!isAStudent">
           <b-button
             type="is-primary"
             @click="isComponentModalActive = true"
@@ -28,13 +28,14 @@
         </div>
         <!-- <fullscreen-post/> -->
         <b-modal
-          v-model="isComponentModalActive"
           trap-focus
-          aria-label="Create new Post"
+          v-model="isComponentModalActive"
+          aria-label="Create new post"
           aria-modal
           v-on:close="loadPosts"
         >
           <!-- <fullscreen-post :class_id="classId" :id="postedBy" /> -->
+          <ModalPost :id="userId" :class_id="classId" />
         </b-modal>
       </b-tab-item>
       <b-tab-item label="Students">
@@ -49,14 +50,16 @@
 
 <script>
 import AppNavbar from "~/components/AppNavbar.vue";
-import FullscreenPost from "~/components/FullscreenPost.vue";
+import ModalPost from "~/components/ModalPost.vue";
 import Post from "~/components/Post";
 import SkeletonPost from "~/components/SkeletonPost.vue";
 
 export default {
-  components: { AppNavbar, Post, SkeletonPost, FullscreenPost },
+  components: { AppNavbar, Post, SkeletonPost, ModalPost },
   data() {
     return {
+      userId: "",
+      classId: "",
       posts: [],
       loadingPosts: true,
       noPost: false,
@@ -79,7 +82,14 @@ export default {
   },
   layout: "app",
   mounted: async function () {
-    console.log();
+    if (this.$route.query.length == 0) {
+      this.$router.push("/app/classroom");
+      return;
+    }
+
+    this.userId = this.$auth.$state.user.message.id;
+    this.classId = await this.$route.query.id;
+    this.isAStudent = this.$auth.$state.user.message.access == 1;
     this.loadPosts();
     this.loadStudents();
   },
@@ -105,7 +115,6 @@ export default {
     },
     async loadPosts() {
       this.posts = [];
-      if (this.$route.query.length == 0) this.$router.push("/app/classroom");
 
       const classId = await this.$route.query.id;
       const classInfo = await this.$axios.$get(`/class?_id=${classId}`);
@@ -130,6 +139,10 @@ export default {
     tabChange() {
       console.log(this.activeTab);
     },
+
+    createPost(e) {
+      console.log(this.$parent.close());
+    },
   },
 };
 </script>
@@ -142,5 +155,9 @@ export default {
   button {
     border-radius: 50%;
   }
+}
+.post-page {
+  overflow: auto;
+  height: 100vh;
 }
 </style>

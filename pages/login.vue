@@ -4,11 +4,7 @@
       <div class="column is-centered is-two-fifths">
         <div class="box mt-4">
           <div class="box has-text-centered">
-            <img
-              class=""
-              src="/bnhs-logo-128.png"
-              alt
-            />
+          <img src="/bnhs-logo-256.png" alt />
           </div>
 
           <b-field label="Login" />

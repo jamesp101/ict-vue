@@ -12,9 +12,14 @@
         :expand-on-hover-fixed="expandOnHoverFixed"
         open
       >
-        <div class="p-1">
+        <div>
           <div class="block has-text-centered">
             <!-- TODO: Insert profile image -->
+            <img
+              src="https://bulma.io/images/placeholders/128x128.png"
+              class="is-image is-128x128 is-rounded"
+              alt
+            />
             <h1 class="is-size-5">{{ user.firstname + ' ' + user.lastname }}</h1>
           </div>
           <b-menu class="is-custom-mobile">
@@ -155,6 +160,7 @@ export default {
 .page {
   width: 100%;
   max-height: 100%;
+  overflow: auto;
 }
 .sidebar-page {
   display: flex;
@@ -169,7 +175,7 @@ export default {
     // min-height: 100vh;
   }
 }
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 412px) {
   .b-sidebar {
     .sidebar-content {
       &.is-mini-mobile {

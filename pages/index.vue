@@ -16,14 +16,7 @@
 <script>
 export default {
   name: "HomePage",
-
-  _components: {},
-  get components() {
-    return this._components;
-  },
-  set components(value) {
-    this._components = value;
-  },
+  auth: false,
 };
 </script>
 

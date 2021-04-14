@@ -1,5 +1,5 @@
 <template lang="pug">
-.card.mr-4.pt-4.mt-2(@click="click")
+.card.mr-4.pt-4.mt-2.is-clickable(@click="click")
   p.card-header-title
     | {{ title }}
   p.ml-4 {{ section }}
