@@ -9,10 +9,13 @@
               class="column is-10 is-offset-1 mb-5"
               v-for="(item, itx) in posts"
               :key="itx"
+              :id="item.id"
               :date="item.postedDate"
               :comments="item.comments"
               :desc="item.title"
               :teacher="item.teacher"
+              @onDelete="onDeletePost"
+              @afterEdit="afterEdit"
             ></Post>
           </div>
           <skeleton-post class="loading-post" v-if="loadingPosts" />
@@ -41,7 +44,11 @@
       <b-tab-item label="Students">
         <h1 has-text-1>Students</h1>
         <section class="section">
-          <b-table :data="students" :columns="columns" default-sort="lastname" />
+          <b-table
+            :data="students"
+            :columns="columns"
+            default-sort="lastname"
+          />
         </section>
       </b-tab-item>
     </b-tabs>
@@ -74,14 +81,14 @@ export default {
         { field: "street", label: "Address" },
         { field: "barangay", label: "Barangay" },
         { field: "city", label: "City" },
-        { field: "province", label: "Province" },
-      ],
+        { field: "province", label: "Province" }
+      ]
       // classId: this.$route.query.id,
       // postedBy: this.$auth.$state.message.id,
     };
   },
   layout: "app",
-  mounted: async function () {
+  mounted: async function() {
     if (this.$route.query.length == 0) {
       this.$router.push("/app/classroom");
       return;
@@ -94,13 +101,34 @@ export default {
     this.loadStudents();
   },
   methods: {
+    async onDeletePost(arg) {
+      try{
+
+        this.$buefy.notification.open({
+          type: 'is-success',
+          hasIcon: true,
+          position: 'is-bottom-right',
+          message: 'Post is deleted'
+        })
+        await this.loadPosts();
+
+      }catch{
+        this.$buefy.notification.open({
+          type: 'is-danger',
+          hasIcon: true,
+          position: 'is-bottom-right',
+          message: 'Something went wrong'
+        })
+
+      }
+    },
     async loadStudents() {
       const classId = await this.$route.query.id;
       const classinfo = await this.$axios.$get(`/class/${classId}`);
 
       const students = classinfo[0].students;
 
-      students.forEach((st) => {
+      students.forEach(st => {
         this.students.push({
           lastname: st.person.lastname,
           firstname: st.person.firstname,
@@ -109,7 +137,7 @@ export default {
           street: st.person.address.street,
           barangay: st.person.address.barangay,
           city: st.person.address.city,
-          province: st.person.address.province,
+          province: st.person.address.province
         });
       });
     },
@@ -120,13 +148,13 @@ export default {
       const classInfo = await this.$axios.$get(`/class?_id=${classId}`);
       // reroute if no class id provided or error
       const posts = await this.$axios.$get(`/post?class=${classId}`);
-      posts.forEach((it) => {
+      posts.forEach(it => {
         this.posts.push({
           id: it._id,
           title: it.title,
           comments: it.comments,
           postedDate: it.postedDate,
-          teacher: `${it.postedBy.person.firstname} ${it.postedBy.person.lastname}`,
+          teacher: `${it.postedBy.person.firstname} ${it.postedBy.person.lastname}`
         });
       });
 
@@ -143,7 +171,10 @@ export default {
     createPost(e) {
       console.log(this.$parent.close());
     },
-  },
+    afterEdit(e){
+      this.loadPosts()
+    }
+  }
 };
 </script>
 

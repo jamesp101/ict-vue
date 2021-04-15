@@ -3,28 +3,32 @@
     <div class="card-content">
       <div class="media is-clipped" v-if="userType != 1">
         <div class="icons">
-          <a @click="onClickDelete">
-            <b-icon icon="delete" type="is-danger"></b-icon>
-            <b-modal trap-focus v-model="isDeleteModalActive" aria-modal>
-              <modal-yes-no
-                label="Delete this Post?"
-                title="Confirm Delete"
-                yesType="is-danger"
-                noType="is-success"
-                @clickClose="deleteClose"
-              />
-            </b-modal>
-          </a>
-          <a @click="onClickEdit">
-            <b-icon icon="pencil" type></b-icon>
-          </a>
+          <b-button
+            type="is-danger is-light"
+            @click="onClickDelete"
+            icon-right="delete"
+          ></b-button>
+          <b-button
+            type="is-primary is-light"
+            @click="onClickEdit"
+            icon-right="pencil"
+          ></b-button>
+          <b-modal 
+            trap-focus
+            v-model="isEdit"
+            aria-modal
+            v-on:close="closeEditModal"
+          >
+          <ModalPost :post_id="id"/>  
+
+          </b-modal>
         </div>
 
         <figure class="image is-48x48">
           <img class="is-rounded" alt src="https://bulma.io/images/placeholders/96x96.png" />
         </figure>
         <div class="media-content ml-4">
-          <p class="title is-6">{{teacher}}</p>
+          <p class="title is-6">{{ teacher }}</p>
           <p class="subtitle is-7">
             <vue-moments-ago prefix="posted" suffix="ago" :date="date" lang="en" />
           </p>
@@ -34,7 +38,7 @@
         <div class="markdown-content editor" v-html="desc"></div>
       </div>
       <div class="card-footer">
-        <a class="my-4" @click="isOpen=!isOpen">Comments</a>
+        <a class="my-4" @click="isOpen = !isOpen">Comments</a>
       </div>
 
       <b-collapse v-model="isOpen" animation="slide">
@@ -59,16 +63,17 @@
   </div>
 </template>
 
-
 <script>
 import PostComments from "./PostComments.vue";
 import VueMomentsAgo from "vue-moments-ago";
 import { ModalProgrammatic as Modal } from "buefy";
 import ModalYesNo from "./ModalYesNo.vue";
+import MarkdownEditor from '~/components/MarkdownEditor'
 
 export default {
   components: { PostComments, VueMomentsAgo, ModalYesNo },
   props: {
+    id: String,
     teacher: String,
     date: String,
     content: String,
@@ -82,13 +87,28 @@ export default {
       isDeleteModalActive: false,
       userType: this.$auth.user.access,
       userId: this.$auth.user.id,
+      postId: "",
+      isEdit: false,
     };
   },
   methods: {
-    onClickDelete() {
-      this.isDeleteModalActive = true;
+    closeEditModal(){
+      this.isEdit = false
+      this.$emit('afterEdit', true)
     },
-    onClickEdit() {},
+    onClickDelete() {
+      if (!confirm("Are you sure you want to delete this post?")) {
+        return;
+      }
+      this.$axios.delete(`/post/${this.id}`);
+      this.$emit("onDelete", true);
+
+      console.log(this.id);
+    },
+    onClickEdit() {
+      this.isEdit = true
+
+    },
     deleteClose() {
       console.log("Delete");
       this.isDeleteModalActive = false;

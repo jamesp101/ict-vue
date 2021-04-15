@@ -114,6 +114,9 @@ import {
   Image,
 } from "tiptap-extensions";
 export default {
+  props:{
+    content: String
+  },
   components: {
     EditorContent,
     EditorMenuBar,
@@ -152,15 +155,15 @@ export default {
       html: "",
     };
   },
-  mounted() {},
+  created() {
+    this.editor.setContent(this.content)
+  },
+
   beforeDestroy() {
     this.editor.destroy();
   },
 
   methods: {
-    updatedText() {
-      console.log("hi");
-    },
     showImagePrompt(command) {
       const src = prompt("Enter the url of your image here");
       if (src !== null) {
@@ -172,6 +175,7 @@ export default {
 </script>
 <style lang="scss">
 .editor {
+  background: white;
   h {
     &1 {
       font-size: 26pt;

@@ -1,14 +1,15 @@
 <template>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Create new Post</p>
+      <p class="modal-card-title">{{modalMessage}}</p>
       <button type="button" class="delete" @click="clickClose"></button>
     </header>
     <section class="modal-card-body">
-      <markdown-editor @textChange="textChange" />
+        <markdown-editor v-if="content || isCreate" @textChange="textChange"  :content="content"/>
       <b-field class="is-pulled-right mt-4" type="is-large">
-        <b-button type="is-primary" label="Submit" @click="newPost" />
-        <b-button type="is-primary" label="Demo" @click="demo" />
+
+        <b-button v-if="isCreate" type="is-primary" label="Submit" @click="onClickSubmit" />
+        <b-button v-else type="is-success" label="Save" @click="onClickSubmit" />
       </b-field>
     </section>
   </div>
@@ -20,14 +21,31 @@ export default {
   props: {
     id: String,
     class_id: String,
+    post_id: String,
+    editorContent: String
   },
   data() {
     return {
       data: "",
+      isCreate: true,
+      modalMessage: "",
+      content:""
     };
   },
   components: { MarkdownEditor },
-  mounted() {},
+   async created() {
+    if (this.post_id == undefined){
+      this.isCreate = true
+      this.modalMessage = "Create new Post"
+      return
+    }
+    this.isCreate = false
+    this.modalMessage = "Edit Post"
+
+    let data= await this.$axios.get(`/post/${this.post_id}`)
+    this.content = data.data[0].title
+    console.log(this.content)   
+  },
   beforeDestroy() {},
 
   methods: {
@@ -41,13 +59,75 @@ export default {
       this.$parent.close();
     },
     async newPost(e) {
-      console.log("HEE", this.data);
-      const res = await this.$axios.$post("/post", {
-        class: this.class_id,
-        postedBy: this.id,
-        title: this.data,
-      });
-      this.$parent.close();
+      if(this.data == ''){
+        this.$buefy.notification.open({
+          type: 'is-danger',
+          hasIcon: true,
+          position: 'is-bottom-right',
+          message: 'Your post cannot be empty'
+        })
+        return
+      }
+      try{
+        const res = await this.$axios.$post("/post", {
+          class: this.class_id,
+          postedBy: this.id,
+          title: this.data,
+        });
+
+        this.$buefy.notification.open({
+          type: 'is-success',
+          hasIcon: true,
+          position: 'is-bottom-right',
+          message: 'Post created'
+        })
+        this.$parent.close();
+        return
+      } catch {
+        this.$buefy.notification.open({
+          type: 'is-danger',
+          hasIcon: true,
+          position: 'is-bottom-right',
+          message: 'Something went wrong'
+        })
+      }
+
+    },
+    checkIfEmpty(){
+
+    },
+    async updatePost(e){
+      if(this.data == ''){
+        this.$buefy.notification.open({
+          type: 'is-warning',
+          hasIcon: true,
+          position: 'is-bottom-right',
+          message: 'No changes were made'
+        })
+        return
+      }
+      const res = await this.$axios.$put(`/post/${this.post_id}`,
+                        {
+                          title: this.data
+                        })
+        this.$buefy.notification.open({
+          type: 'is-success',
+          hasIcon: true,
+          position: 'is-bottom-right',
+          message: 'Post Updated'
+        })
+      this.$parent.close()
+    },
+    async onClickSubmit(e){
+      if (this.isCreate){
+        this.newPost(e)
+        return
+      }      
+
+      this.updatePost(e)
+      return
+      
+
     },
   },
 };
