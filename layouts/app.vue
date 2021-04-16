@@ -15,11 +15,7 @@
         <div>
           <div class="block has-text-centered">
             <!-- TODO: Insert profile image -->
-            <img
-              src="https://bulma.io/images/placeholders/128x128.png"
-              class="is-image is-128x128 is-rounded"
-              alt
-            />
+            <img src="/bnhs-logo-128.png" class="is-image is-128x128 is-rounded" alt />
             <h1 class="is-size-5">{{ user.firstname + ' ' + user.lastname }}</h1>
           </div>
           <b-menu class="is-custom-mobile">
@@ -117,18 +113,18 @@ export default {
       admin: [
         {
           title: "User",
-          icon: "",
-          to: "app/admin/user",
+          icon: "clipboard-account-outline",
+          to: "/app/admin_user",
         },
         {
           title: "Classroom",
-          icon: "",
-          to: "app/admin/user",
+          icon: "google-classroom",
+          to: "/app/admin_classroom",
         },
         {
-          title: "Classroom",
-          icon: "",
-          to: "app/admin/user",
+          title: "Subject",
+          icon: "book-open-variant",
+          to: "/app/admin_subject",
         },
       ],
     };

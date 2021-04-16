@@ -3,24 +3,10 @@
     <div class="card-content">
       <div class="media is-clipped" v-if="userType != 1">
         <div class="icons">
-          <b-button
-            type="is-danger is-light"
-            @click="onClickDelete"
-            icon-right="delete"
-          ></b-button>
-          <b-button
-            type="is-primary is-light"
-            @click="onClickEdit"
-            icon-right="pencil"
-          ></b-button>
-          <b-modal 
-            trap-focus
-            v-model="isEdit"
-            aria-modal
-            v-on:close="closeEditModal"
-          >
-          <ModalPost :post_id="id"/>  
-
+          <b-button type="is-danger is-light" @click="onClickDelete" icon-right="delete"></b-button>
+          <b-button type="is-primary is-light" @click="onClickEdit" icon-right="pencil"></b-button>
+          <b-modal trap-focus v-model="isEdit" aria-modal v-on:close="closeEditModal">
+            <ModalPost :post_id="id" />
           </b-modal>
         </div>
 
@@ -68,7 +54,7 @@ import PostComments from "./PostComments.vue";
 import VueMomentsAgo from "vue-moments-ago";
 import { ModalProgrammatic as Modal } from "buefy";
 import ModalYesNo from "./ModalYesNo.vue";
-import MarkdownEditor from '~/components/MarkdownEditor'
+import MarkdownEditor from "~/components/MarkdownEditor";
 
 export default {
   components: { PostComments, VueMomentsAgo, ModalYesNo },
@@ -85,16 +71,16 @@ export default {
     return {
       isOpen: false,
       isDeleteModalActive: false,
-      userType: this.$auth.user.access,
+      userType: this.$auth.user.message.access,
       userId: this.$auth.user.id,
       postId: "",
       isEdit: false,
     };
   },
   methods: {
-    closeEditModal(){
-      this.isEdit = false
-      this.$emit('afterEdit', true)
+    closeEditModal() {
+      this.isEdit = false;
+      this.$emit("afterEdit", true);
     },
     onClickDelete() {
       if (!confirm("Are you sure you want to delete this post?")) {
@@ -106,8 +92,7 @@ export default {
       console.log(this.id);
     },
     onClickEdit() {
-      this.isEdit = true
-
+      this.isEdit = true;
     },
     deleteClose() {
       console.log("Delete");

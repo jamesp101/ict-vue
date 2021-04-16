@@ -55,7 +55,7 @@ export default {
     console.log(this.$auth.user);
     this.loading = true;
     const userId = this.$auth.user.message.id;
-    const access = this.$auth.user.message.access > 1 ? "teacher" : "student";
+    const access = this.$auth.user.message.access > 1 ? "teacher" : "students";
     const res = await this.$axios.$get(`/class?${access}=${userId}`);
     res.forEach((it) => {
       this.myClasses.push({
