@@ -1,81 +1,88 @@
 <template>
   <div>
-    <b-tabs>
-      <b-tab-item label="Students">
-        <div class="columns is-centered is-multiline mt-6">
-          <div class="column is-11 has-background-primary">
-            <h1 class="has-text-primary-light is-size-5">Student List</h1>
-            <b-input
-              placeholder="Search..."
-              icon="magnify"
-              size="is-small"
-              v-model="studentSearch"
-              @input="studentTextChange"
-            />
-            <div class="columns mt-3">
-              <b-button
-                class="column is-1"
-                type="is-primary"
-                size="is-medium"
-                icon-left="account-multiple-plus"
-                @click="isModalAddActive = true"
-              ></b-button>
-              <b-button class="column is-1" type="is-primary" size="is-medium" icon-left="pencil"></b-button>
-              <b-button
-                class="column is-1"
-                type="is-primary"
-                size="is-medium"
-                @click="studentDelete"
-                icon-left="delete"
-              ></b-button>
-              <b-button
-                class="column is-1"
-                type="is-primary"
-                size="is-medium"
-                @click="studentSelected = null"
-                icon-left="backspace"
-              ></b-button>
-            </div>
-          </div>
+    <div class="columns is-centered is-multiline mt-6">
+      <div class="column is-11 has-background-primary mb-5">
+        <h1 class="has-text-primary-light is-size-5">User lists</h1>
+        <b-input
+          placeholder="Search..."
+          icon="magnify"
+          size="is-small"
+          v-model="studentSearch"
+          @input="studentTextChange"
+        />
+        <b-field>
+          <b-button type="is-primary" size="is-medium" @click="loadAccounts" icon-left="reload"></b-button>
+          <b-button
+            type="is-primary"
+            size="is-medium"
+            icon-left="account-multiple-plus"
+            @click="isModalAddActive = true"
+          ></b-button>
+          <b-button type="is-primary" size="is-medium" icon-left="pencil"></b-button>
+          <b-button type="is-primary" size="is-medium" @click="studentDelete" icon-left="delete"></b-button>
+          <b-button
+            type="is-primary"
+            size="is-medium"
+            @click="studentSelected = null"
+            icon-left="backspace"
+          ></b-button>
+        </b-field>
+        <b-field>
+          <nuxt-link
+            to="/preregistration"
+            class="is-primary is-pulled-right has-text-white"
+          >Pre-registration</nuxt-link>
+        </b-field>
+      </div>
+      <b-field>
+        <b-radio-button
+          v-model="selection"
+          @input="loadAccounts()"
+          native-value="student"
+          type="is-outlined is-primary is-light"
+        >
+          <span>Student</span>
+        </b-radio-button>
+        <b-radio-button
+          v-model="selection"
+          native-value="teacher"
+          type="is-outlined is-primary is-light"
+          @input="loadAccounts()"
+        >
+          <span>Teacher</span>
+        </b-radio-button>
+        <b-radio-button
+          v-model="selection"
+          native-value="admin"
+          type="is-outlined is-primary is-light"
+          @input="loadAccounts()"
+        >
+          <span>Admin</span>
+        </b-radio-button>
+      </b-field>
 
-          <div class="column is-11 border" v-if="isLoading">
-            <b-skeleton width="100%"></b-skeleton>
-            <b-skeleton width="100%"></b-skeleton>
-            <b-skeleton width="100%"></b-skeleton>
-            <b-skeleton width="100%"></b-skeleton>
-            <b-skeleton width="100%"></b-skeleton>
-          </div>
-          <b-table
-            v-else
-            :selected.sync="studentSelected"
-            class="column is-11 border"
-            :data="accountData"
-            :columns="accountColumns"
-          ></b-table>
-        </div>
-      </b-tab-item>
-      <b-tab-item label="Employees">
-        <div class="columns is-centered is-multiline mt-6">
-          <div class="column is-9 has-background-primary">
-            <h1 class="has-text-primary-light is-size-5">Employee</h1>
-          </div>
-          <div class="column is-9 border" v-if="isLoading">
-            <b-skeleton width="100%"></b-skeleton>
-            <b-skeleton width="100%"></b-skeleton>
-            <b-skeleton width="100%"></b-skeleton>
-            <b-skeleton width="100%"></b-skeleton>
-            <b-skeleton width="100%"></b-skeleton>
-          </div>
-          <b-table v-else class="column is-9 border" :data="employeeData" :columns="accountColumns"></b-table>
-        </div>
-      </b-tab-item>
-    </b-tabs>
+      <div class="column is-11 border" v-if="isLoading">
+        <b-skeleton width="100%"></b-skeleton>
+        <b-skeleton width="100%"></b-skeleton>
+        <b-skeleton width="100%"></b-skeleton>
+        <b-skeleton width="100%"></b-skeleton>
+        <b-skeleton width="100%"></b-skeleton>
+      </div>
+      <b-table
+        v-else
+        :selected.sync="studentSelected"
+        class="column is-11 border"
+        :data="accountData"
+        :columns="accountColumns"
+      ></b-table>
+    </div>
     <b-modal
       v-model="isModalAddActive"
       has-modal-card
       trap-focus
       aria-label="Create new post"
       aria-modal
+      @close="loadAccounts()"
     >
       <modal-create-user />
     </b-modal>
@@ -92,7 +99,7 @@ export default {
   data() {
     return {
       accountColumns: [
-        { field: "id", label: "ID" },
+        { field: "username", label: "Username" },
         { field: "lastname", label: "Last Name" },
         { field: "firstname", label: "First Name" },
         { field: "address", label: "Address" },
@@ -104,16 +111,34 @@ export default {
       studentSelected: null,
       activeTab: 0,
       isModalAddActive: false,
+      selection: "student",
+      isModalEditActive: false,
     };
   },
 
   async created() {
+    const userType = this.$auth.user.access;
+    if (userType <= 3) {
+      this.$router.push("/app/dashboard");
+      return;
+    }
     this.loadAccounts();
-    this.loadEmployees();
   },
   methods: {
     clearStudentTable() {
       this.accountData = [];
+    },
+    getAccessType() {
+      console.log("log", this.selection);
+      switch (this.selection) {
+        default:
+        case "student":
+          return 1;
+        case "teacher":
+          return 2;
+        case "admin":
+          return 4;
+      }
     },
 
     async studentTextChange() {
@@ -122,8 +147,9 @@ export default {
         return;
       }
       const data = await this.$axios.get(
-        `/account/search/${this.studentSearch}?access=1`
+        `/account/search/${this.studentSearch}?access=${this.getAccessType()}`
       );
+      console.log("request", data);
       // this.accountData = data.data;
       this.clearStudentTable();
       const getData = data.data;
@@ -131,66 +157,34 @@ export default {
         console.log(user);
         this.accountData.push({
           id: user._id,
+          username: user.username,
           lastname: user.person?.lastname,
           firstname: user.person?.firstname,
           gender: user.person?.gender,
-          address:
-            user.person?.address?.street +
-            ", " +
-            user.person?.address?.barangay +
-            ", " +
-            user.person?.address?.city +
-            "," +
-            user.person?.address?.province,
+          address: user.person?.address,
         });
       }
     },
     async loadAccounts() {
       this.clearStudentTable();
-      const data = await this.$axios.get("/account?access=1");
+      const data = await this.$axios.get(
+        `/account?access=${this.getAccessType()}`
+      );
       // this.accountData = data.data;
       const getData = data.data;
       for (let user of getData) {
         console.log(user);
         this.accountData.push({
           id: user._id,
+          username: user.username,
           lastname: user.person?.lastname,
           firstname: user.person?.firstname,
           gender: user.person?.gender,
-          address:
-            user.person?.address?.street +
-            ", " +
-            user.person?.address?.barangay +
-            ", " +
-            user.person?.address?.city +
-            "," +
-            user.person?.address?.province,
+          address: user.person?.address,
         });
       }
       console.log("ACCOUNT DATA ", this.accountData);
       this.isLoading = false;
-    },
-    async loadEmployees() {
-      const data = await this.$axios.get("/account?access=2");
-      // this.accountData = data.data;
-      const getData = data.data;
-      for (let user of getData) {
-        console.log(user);
-        this.employeeData.push({
-          id: user._id,
-          lastname: user.person?.lastname,
-          firstname: user.person?.firstname,
-          gender: user.person?.gender,
-          address:
-            user.person?.address?.street +
-            ", " +
-            user.person?.address?.barangay +
-            ", " +
-            user.person?.address?.city +
-            "," +
-            user.person?.address?.province,
-        });
-      }
     },
     async studentDelete() {
       if (this.studentSelected == null) {
@@ -205,7 +199,23 @@ export default {
       if (!confirm("Delete this student?")) {
         return;
       }
-      console.log(this.studentSelected);
+      try {
+        await this.$axios.$delete(`/account/${this.studentSelected.id}`);
+        this.loadAccounts();
+        this.$buefy.notification.open({
+          type: "is-success",
+          hasIcon: true,
+          position: "is-top-right",
+          message: "User Deleted",
+        });
+      } catch {
+        this.$buefy.notification.open({
+          type: "is-danger",
+          hasIcon: true,
+          position: "is-top-right",
+          message: "Something went wrong",
+        });
+      }
     },
   },
 };

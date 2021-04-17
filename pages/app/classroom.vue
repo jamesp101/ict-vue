@@ -58,12 +58,13 @@ export default {
     const access = this.$auth.user.message.access > 1 ? "teacher" : "students";
     const res = await this.$axios.$get(`/class?${access}=${userId}`);
     res.forEach((it) => {
+      console.log(it);
       this.myClasses.push({
         title: it.subject,
         students: it.students.length,
         section: it.yearLevel + " " + it.section,
         teacher: it.teacher.person.firstname + " " + it.teacher.person.lastname,
-        schedule: it.schedule.join(),
+        schedule: it.schedule,
         yearLevel: it.yearLevel,
         to: it._id,
       });

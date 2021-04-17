@@ -112,19 +112,14 @@ export default {
       ],
       admin: [
         {
-          title: "User",
+          title: "User Management",
           icon: "clipboard-account-outline",
           to: "/app/admin_user",
         },
         {
-          title: "Classroom",
+          title: "Classroom Management",
           icon: "google-classroom",
           to: "/app/admin_classroom",
-        },
-        {
-          title: "Subject",
-          icon: "book-open-variant",
-          to: "/app/admin_subject",
         },
       ],
     };
@@ -136,8 +131,8 @@ export default {
     console.log(res);
     const response = res[0];
     this.user = {
-      firstname: response.person.firstname,
-      lastname: response.person.lastname,
+      firstname: response.person?.firstname,
+      lastname: response.person?.lastname,
       id: response._id,
       access: response.access,
     };

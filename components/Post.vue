@@ -11,7 +11,7 @@
         </div>
 
         <figure class="image is-48x48">
-          <img class="is-rounded" alt src="https://bulma.io/images/placeholders/96x96.png" />
+          <img class="is-rounded" alt src="/bnhs-logo-128.png" />
         </figure>
         <div class="media-content ml-4">
           <p class="title is-6">{{ teacher }}</p>
@@ -23,28 +23,28 @@
       <div class="content">
         <div class="markdown-content editor" v-html="desc"></div>
       </div>
-      <div class="card-footer">
-        <a class="my-4" @click="isOpen = !isOpen">Comments</a>
-      </div>
+      <!-- <div class="card-footer">
+           <a class="my-4" @click="isOpen = !isOpen">Comments</a>
+           </div>
 
-      <b-collapse v-model="isOpen" animation="slide">
-        <div class="media">
-          <figure class="media-left">
-            <p class="image is-64x64">
-              <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" />
-            </p>
-          </figure>
+           <b-collapse v-model="isOpen" animation="slide">
+           <div class="media">
+           <figure class="media-left">
+           <p class="image is-64x64">
+           <img class="is-rounded" src="/bnhs-logo-128.png" />
+           </p>
+           </figure>
 
-          <div class="media-content">
-            <div class="field">
-              <p class="control">
-                <b-input type="textarea" maxlength="10000" rows="2"></b-input>
-              </p>
-            </div>
-            <a class="button is-info is-pulled-right" href>Submit</a>
-          </div>
-        </div>
-      </b-collapse>
+           <div class="media-content">
+           <div class="field">
+           <p class="control">
+           <b-input type="textarea" maxlength="10000" rows="2"></b-input>
+           </p>
+           </div>
+           <a class="button is-info is-pulled-right" href>Submit</a>
+           </div>
+           </div>
+      </b-collapse>-->
     </div>
   </div>
 </template>
