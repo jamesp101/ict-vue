@@ -1,0 +1,57 @@
+<template>
+  <div class="modal-card">
+    <div class="modal-card-body">
+      <b-field lable="Add Students">
+        <b-taginput
+          v-model="tags"
+          type="text"
+          @typing="filteredDataObj"
+          placeholder="Teacher"
+          open-on-focus
+          clearable
+          field="fullname"
+          autocomplete
+          :allowNew="allowNew"
+          @select="option => (selected = option)"
+        ></b-taginput>
+      </b-field>
+      <b-field>
+        <b-button type="is-primary" label="Finish"></b-button>
+      </b-field>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      data: [],
+      tags: [],
+      allowNew: false,
+    };
+  },
+  async created() {
+    const data = await this.$axios.$get("/account?access=1");
+    for (let i of data) {
+      i.fullname = i.person.firstname + ", " + i.person.lastname;
+    }
+    this.data = data;
+  },
+  methods: {
+    filteredDataObj(text) {
+      return this.data.filter((option) => {
+        return (
+          option.person.fullname
+            .toString()
+            .toLowerCase()
+            .indexOf(text.toLowerCase()) >= 0
+        );
+      });
+    },
+  },
+};
+</script>
+
+<style>
+</style>
