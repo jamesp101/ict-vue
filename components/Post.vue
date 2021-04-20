@@ -3,14 +3,24 @@
     <div class="card-content">
       <div class="media is-clipped" v-if="userType != 1">
         <div class="icons">
-          <b-button type="is-danger is-light" @click="onClickDelete" icon-right="delete"></b-button>
-          <b-button type="is-primary is-light" @click="onClickEdit" icon-right="pencil"></b-button>
+          <b-button
+            type="is-danger is-light"
+            v-if="!isSpecial"
+            @click="onClickDelete"
+            icon-right="delete"
+          ></b-button>
+          <b-button
+            type="is-primary is-light"
+            v-if="!isSpecial"
+            @click="onClickEdit"
+            icon-right="pencil"
+          ></b-button>
           <b-modal trap-focus v-model="isEdit" aria-modal v-on:close="closeEditModal">
             <ModalPost :post_id="id" />
           </b-modal>
         </div>
 
-        <figure class="image is-48x48">
+        <figure class="image is-48x48" v-if="!isSpecial">
           <img class="is-rounded" alt src="/bnhs-logo-128.png" />
         </figure>
         <div class="media-content ml-4">
@@ -21,30 +31,30 @@
         </div>
       </div>
       <div class="content">
-        <div class="markdown-content editor" v-html="desc"></div>
+        <div class="markdown-content editor" v-html="desc" v-bind:class="{ maxheight: isSpecial }"></div>
       </div>
-      <!-- <div class="card-footer">
-           <a class="my-4" @click="isOpen = !isOpen">Comments</a>
-           </div>
+      <div class="card-footer">
+        <a class="my-4" @click="isOpen = !isOpen">Comments</a>
+      </div>
 
-           <b-collapse v-model="isOpen" animation="slide">
-           <div class="media">
-           <figure class="media-left">
-           <p class="image is-64x64">
-           <img class="is-rounded" src="/bnhs-logo-128.png" />
-           </p>
-           </figure>
+      <b-collapse v-model="isOpen" animation="slide">
+        <div class="media">
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <img class="is-rounded" src="/bnhs-logo-128.png" />
+            </p>
+          </figure>
 
-           <div class="media-content">
-           <div class="field">
-           <p class="control">
-           <b-input type="textarea" maxlength="10000" rows="2"></b-input>
-           </p>
-           </div>
-           <a class="button is-info is-pulled-right" href>Submit</a>
-           </div>
-           </div>
-      </b-collapse>-->
+          <div class="media-content">
+            <div class="field">
+              <p class="control">
+                <b-input type="textarea" maxlength="10000" rows="2"></b-input>
+              </p>
+            </div>
+            <a class="button is-info is-pulled-right" href>Submit</a>
+          </div>
+        </div>
+      </b-collapse>
     </div>
   </div>
 </template>
@@ -66,16 +76,22 @@ export default {
     subject: String,
     comments: Array,
     desc: String,
+    isFull: Boolean,
+    isSpecial: Boolean,
   },
   data() {
     return {
       isOpen: false,
       isDeleteModalActive: false,
-      userType: this.$auth.user.message.access,
+      userType: "",
       userId: this.$auth.user.id,
       postId: "",
       isEdit: false,
     };
+  },
+  created() {
+    console.log(`Debug`);
+    this.userType = this.$auth.user.message.access;
   },
   methods: {
     closeEditModal() {
@@ -115,13 +131,19 @@ export default {
 
 <style scoped lang="scss">
 .markdown-content {
-  max-height: 300px;
+  height: 300px;
   background: #ffffff;
   overflow: auto;
   & h1 h2 h3 h4 h5 h6 {
     font-weight: bold;
     font-size: 1pt;
   }
+}
+.minheight {
+  height: 300px;
+}
+.maxheight {
+  height: 100%;
 }
 .icons {
   position: absolute;

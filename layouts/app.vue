@@ -41,6 +41,26 @@
                 </NuxtLink>
               </li>
             </b-menu-list>
+            <!-- manual -->
+            <b-menu-list label="Manual">
+              <b-menu-item expanded label="ICT Manual">
+                <li v-for="(item,key) of manual" :key="key">
+                  <NuxtLink :to="item.to" exact-active-class="is-active">
+                    <b-icon :icon="item.icon" size="is-small" />
+                    <span>{{item.title}}</span>
+                  </NuxtLink>
+                </li>
+                <li>
+                  <a
+                    href="https://docs.google.com/document/d/1XJ8n9cK4d9qlbPcwnqoIduhMfje1c7GXyTwPBy5We6I/edit?usp=sharing"
+                  >
+                    <b-icon :icon="download-circle" size="is-small" />
+                    <span>Download</span>
+                  </a>
+                </li>
+              </b-menu-item>
+            </b-menu-list>
+            <!-- manual -->
 
             <!-- Admin -->
             <b-menu-list label="Admin" v-if="access == 4">
@@ -92,7 +112,7 @@ export default {
       access: 1,
       menu: [
         {
-          title: "Dashboards",
+          title: "Dashboard",
           icon: "view-dashboard",
           to: "/app/dashboard",
         },
@@ -100,6 +120,34 @@ export default {
           title: "Classroom",
           icon: "google-classroom",
           to: "/app/classroom",
+        },
+      ],
+      manual: [
+        {
+          title: "I. Foreword",
+          icon: "book",
+          to: "/app/manual_foreword",
+        },
+        {
+          title: "II. Internet Access Policy",
+          icon: "book",
+          to: "/app/manual_internet",
+        },
+        {
+          title: "III. Computer Procurement",
+          icon: "book",
+          to: "/app/manual_procurement",
+        },
+        {
+          title:
+            "IV. Computer Policy, Disposal, Procedure and Printing Guidelines",
+          icon: "book",
+          to: "/app/manual_computer_policy",
+        },
+        {
+          title: "V. Computer Laboratory Policy",
+          icon: "book",
+          to: "/app/manual_lab_policy",
         },
       ],
 
@@ -115,6 +163,11 @@ export default {
           title: "User Management",
           icon: "clipboard-account-outline",
           to: "/app/admin_user",
+        },
+        {
+          title: "Classroom Management",
+          icon: "google-classroom",
+          to: "/app/admin_classroom",
         },
         {
           title: "Classroom Management",
