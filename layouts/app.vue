@@ -54,7 +54,7 @@
                   <a
                     href="https://docs.google.com/document/d/1XJ8n9cK4d9qlbPcwnqoIduhMfje1c7GXyTwPBy5We6I/edit?usp=sharing"
                   >
-                    <b-icon :icon="download-circle" size="is-small" />
+                    <b-icon icon="download" size="is-small" />
                     <span>Download</span>
                   </a>
                 </li>
@@ -163,11 +163,6 @@ export default {
           title: "User Management",
           icon: "clipboard-account-outline",
           to: "/app/admin_user",
-        },
-        {
-          title: "Classroom Management",
-          icon: "google-classroom",
-          to: "/app/admin_classroom",
         },
         {
           title: "Classroom Management",

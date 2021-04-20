@@ -80,13 +80,15 @@ export default {
       this.myClasses = [];
       const res = await this.$axios.$get(`/class`);
       res.forEach((it) => {
-        console.log("DEbug");
+        console.log("DEbug", it);
         this.myClasses.push({
           title: it.subject,
           students: it.students.length,
           section: it.yearLevel + " " + it.section,
           teacher:
-            it.teacher.person?.firstname + " " + it.teacher.person?.lastname,
+            it.teacher?.person?.firstname +
+              " " +
+              it.teacher?.person?.lastname || "",
           schedule: it.schedule,
           yearLevel: it.yearLevel,
           to: it._id,

@@ -26,7 +26,7 @@
         <div class="media-content ml-4">
           <p class="title is-6">{{ teacher }}</p>
           <p class="subtitle is-7">
-            <vue-moments-ago prefix="posted" suffix="ago" :date="date" lang="en" />
+            <vue-moments-ago v-if="date" prefix="posted" suffix="ago" :date="date" lang="en" />
           </p>
         </div>
       </div>
@@ -48,10 +48,24 @@
           <div class="media-content">
             <div class="field">
               <p class="control">
-                <b-input type="textarea" maxlength="10000" rows="2"></b-input>
+                <b-input type="textarea" v-model="commentToBePosted" maxlength="10000" rows="2"></b-input>
               </p>
             </div>
-            <a class="button is-info is-pulled-right" href>Submit</a>
+            <b-button class="button is-info is-pulled-right" @click="createPost" href>Submit</b-button>
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-12" v-for="(data, key) in commentData" :key="key">
+            <post-comments
+              class="is-size-6"
+              :commenter="data.lastname + ' ' + data.firstname"
+              :comment="data.title"
+              :postId="id"
+              :userId="data.userId"
+              :datePosted="data.commentDate"
+              :commentId="data.commentId"
+              @onChange="commentChange"
+            />
           </div>
         </div>
       </b-collapse>
@@ -62,9 +76,7 @@
 <script>
 import PostComments from "./PostComments.vue";
 import VueMomentsAgo from "vue-moments-ago";
-import { ModalProgrammatic as Modal } from "buefy";
 import ModalYesNo from "./ModalYesNo.vue";
-import MarkdownEditor from "~/components/MarkdownEditor";
 
 export default {
   components: { PostComments, VueMomentsAgo, ModalYesNo },
@@ -81,19 +93,62 @@ export default {
   },
   data() {
     return {
+      dataId: this.id,
       isOpen: false,
       isDeleteModalActive: false,
       userType: "",
-      userId: this.$auth.user.id,
+      userId: "",
       postId: "",
       isEdit: false,
+      commentData: [],
+      commentToBePosted: "",
+      isAdmin: this.$auth.user.message.access,
     };
   },
   created() {
-    console.log(`Debug`);
+    console.log(`post id`, this.id);
     this.userType = this.$auth.user.message.access;
+    this.loadComments();
   },
   methods: {
+    async createPost() {
+      try {
+        const user = this.$auth.user.message.id;
+        const res = await this.$axios.post(`/post/${this.dataId}/comments`, {
+          user: user,
+          title: this.commentToBePosted,
+        });
+        this.loadComments();
+        this.$buefy.notification.open({
+          type: "is-success",
+          message: "Post created",
+          hasIcon: true,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async loadComments() {
+      this.commentData = [];
+      try {
+        const res = await this.$axios.$get(`/post/${this.id}/comments`);
+        const comments = res[0].comments;
+        console.log(`Debug Comments`, comments);
+        for (let i of comments) {
+          this.commentData.push({
+            commentId: i?._id,
+            userId: i?.user?._id || "",
+            lastname: i?.user?.person?.lastname || "Anonymous",
+            firstname: i?.user?.person?.firstname || "",
+            title: i?.title || "",
+            commentDate: i?.commentDate || "",
+          });
+        }
+      } catch (e) {
+        console.error(`Debug Comments`, e);
+      }
+      console.log("HELLO");
+    },
     closeEditModal() {
       this.isEdit = false;
       this.$emit("afterEdit", true);
@@ -114,6 +169,9 @@ export default {
       console.log("Delete");
       this.isDeleteModalActive = false;
     },
+    commentChange() {
+      this.loadComments();
+    },
   },
 
   computed: {
@@ -123,9 +181,7 @@ export default {
       };
     },
   },
-  mounted() {
-    console.log(this.$auth.user);
-  },
+  mounted() {},
 };
 </script>
 

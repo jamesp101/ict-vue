@@ -64,6 +64,12 @@ export default {
 
             console.log("RESPONSE" , it)
             this.$router.push("app/dashboard");
+              this.$buefy.toast.open({
+                  duration: 5000,
+                  message: `Successfuly logged in`,
+                  position: 'is-bottom',
+                  type: 'is-success'
+              })
           })
           .catch(err=>{
               console.error(err)
