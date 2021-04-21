@@ -53,7 +53,7 @@
                 <li >
                   <a
                   class="button is-primary"
-                    href="https://docs.google.com/document/d/1XJ8n9cK4d9qlbPcwnqoIduhMfje1c7GXyTwPBy5We6I/edit?usp=sharing"
+                    href="https://drive.google.com/file/d/1b3xUZD8JYgoQM4WguojdkFa5fvgzTXzx/view?usp=sharing"
                   >
                     <b-icon icon="download" size="is-small" />
                     <span>Download</span>
