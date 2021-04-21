@@ -7,6 +7,9 @@
 <script>
 export default {
   name: "HomePage",
+  head:{
+    title: "VNHS"
+  },
   auth: false,
 };
 </script>
