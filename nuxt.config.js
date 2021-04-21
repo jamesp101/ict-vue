@@ -17,7 +17,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['@/assets/scss/main.scss'],
+  css: ["@/assets/scss/main.scss"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -73,7 +73,7 @@ export default {
   },
 
   axios: {
-    baseURL: 'http://apis-b90c4b.appfleet.net/'
+    baseURL: "https://ict-server.herokuapp.com/"
   },
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
