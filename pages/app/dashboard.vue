@@ -75,7 +75,7 @@ export default {
   methods: {
     clickLogout() {
       this.$auth.logout();
-      this.$router.push("login");
+      this.$router.push("/login");
     },
   },
 };

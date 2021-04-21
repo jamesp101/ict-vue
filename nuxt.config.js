@@ -73,7 +73,7 @@ export default {
   },
 
   axios: {
-    baseURL: process.env.BASEURL || "http://localhost:8000"
+    baseURL: 'http://apis-b90c4b.appfleet.net/'
   },
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
