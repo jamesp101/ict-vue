@@ -10,12 +10,13 @@
         :fullheight="fullheight"
         :expand-on-hover-fixed="expandOnHoverFixed"
         open
+        right
       >
         <div>
           <div class="block has-text-centered">
             <!-- TODO: Insert profile image -->
             <img src="https://www.aclcbukidnon.com/Account/ACLCLogo.png" class="is-image is-128x128 is-rounded has-background-white" alt />
-            <h1 class="is-size-5 has-text-white">{{ user.firstname + ' ' + user.lastname }}</h1>
+            <h1 class="is-size-5">{{ user.firstname + ' ' + user.lastname }}</h1>
           </div>
           <b-menu class="is-custom-mobile">
             <!-- <b-menu-list label="Menu">
@@ -124,30 +125,40 @@ export default {
       ],
       manual: [
         {
-          title: "I. Foreword",
+          title: "Foreword",
           icon: "book",
           to: "/app/manual_foreword",
         },
         {
-          title: "II. Internet Access Policy",
+          title: "Internet Access Policy",
           icon: "book",
           to: "/app/manual_internet",
         },
         {
-          title: "III. Computer Procurement",
+          title: "Computer Procurement",
           icon: "book",
           to: "/app/manual_procurement",
         },
         {
           title:
-            "IV. Computer Policy, Disposal, Procedure and Printing Guidelines",
+            "Computer, email, and Internet Usage",
           icon: "book",
           to: "/app/manual_computer_policy",
         },
         {
-          title: "V. Computer Laboratory Policy",
+          title: "Rationale",
           icon: "book",
-          to: "/app/manual_lab_policy",
+          to: "/app/manual_rationale",
+        },
+        {
+          title: "Scope",
+          icon: "book",
+          to: "/app/manual_scope",
+        },
+        {
+          title: "Policy",
+          icon: "book",
+          to: "/app/manual_policy",
         },
       ],
 

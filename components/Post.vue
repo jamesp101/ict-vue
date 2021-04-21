@@ -21,7 +21,7 @@
         </div>
 
         <figure class="image is-48x48" v-if="!isSpecial">
-          <img class="is-rounded" alt src="/bnhs-logo-128.png" />
+          <img class="is-rounded" alt src="https://www.aclcbukidnon.com/Account/ACLCLogo.png" />
         </figure>
         <div class="media-content ml-4">
           <p class="title is-6">{{ teacher }}</p>
@@ -41,7 +41,7 @@
         <div class="media">
           <figure class="media-left">
             <p class="image is-64x64">
-              <img class="is-rounded" src="/bnhs-logo-128.png" />
+              <img class="is-rounded" src="https://www.aclcbukidnon.com/Account/ACLCLogo.png" />
             </p>
           </figure>
 

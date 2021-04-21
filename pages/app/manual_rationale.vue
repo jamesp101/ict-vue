@@ -1,4 +1,3 @@
-
 <template>
   <Post
     class="column is-12 mb-5"
@@ -16,7 +15,7 @@ export default {
   layout: "app",
   data() {
     return {
-      postId: "607ff4c807014d00047a7a66",
+      postId: "607ff61907014d00047a7a68", 
       postDetails: ""
 
     };

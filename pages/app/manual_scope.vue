@@ -16,7 +16,7 @@ export default {
   layout: "app",
   data() {
     return {
-      postId: "607ff4c807014d00047a7a66",
+      postId: "607ff65607014d00047a7a69",
       postDetails: ""
 
     };

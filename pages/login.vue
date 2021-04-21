@@ -95,7 +95,7 @@ export default {
 .custom-img{
   height: 150px;
 }
-
-
 </style>
+
+
 

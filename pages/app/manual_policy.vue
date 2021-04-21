@@ -1,14 +1,4 @@
 
-<template>
-  <Post
-    class="column is-12 mb-5"
-    :id="postId"
-    :desc="postDetails"
-    isSpecial
-    @afterEdit="afterEdit"
-  />
-</template>
-
 <script>
 import Post from "~/components/Post.vue";
 export default {
@@ -16,7 +6,7 @@ export default {
   layout: "app",
   data() {
     return {
-      postId: "607ff4c807014d00047a7a66",
+      postId: "607ff69e07014d00047a7a6a",
       postDetails: ""
 
     };

@@ -13,7 +13,7 @@ export default {
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { hid: "description", name: "description", content: "" }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/bnhs-logo-128.png" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "" }]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
