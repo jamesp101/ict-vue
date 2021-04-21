@@ -1,28 +1,28 @@
 
 <template>
-  <div>
+  <div class="p-5">
     <div class="columns is-multiline">
-      <div class="column is-6">
+      <div class="column is-12">
         <h1 class="has-background-primary is-size-5 pt-5 has-text-white">
           <b>Account</b>
         </h1>
         <div class="row mt-1">
-          <nuxt-link class="button is-primary" to="/app/classroom">View Account</nuxt-link>
+          <nuxt-link class="button is-primary" to="/app/profile">View Account</nuxt-link>
         </div>
         <div class="row mt-1">
           <b-button type="is-danger is-light" @click="clickLogout">Logout</b-button>
         </div>
       </div>
-      <div class="column is-6">
+      <div class="column is-12">
         <h1 class="has-background-primary is-size-5 pt-5 has-text-white">
           <b>Classroom</b>
         </h1>
         <div class="row mt-1">
-          <nuxt-link class="button is-primary" to="/app/profile">View Classroom</nuxt-link>
+          <nuxt-link class="button is-primary" to="/app/classroom">View Classroom</nuxt-link>
         </div>
       </div>
     </div>
-    <div class="columns is-multiline">
+    <!-- <div class="columns is-multiline">
       <div class="column is-12">
         <h1 class="has-background-primary is-size-5 pt-5 has-text-white">
           <b>ICT MANUAL</b>
@@ -49,8 +49,8 @@
           <b-icon icon="book" size="is-large"></b-icon>
           <h1>V. Computer Laboratory Policy</h1>
         </nuxt-link>
-      </div>
-    </div>
+      </div> 
+    </div> -->
   </div>
 </template>
 

@@ -13,11 +13,11 @@
 import Post from "~/components/Post.vue";
 export default {
   components: { Post },
-  head: { title: "I. Foreword" },
   layout: "app",
   data() {
+    
     return {
-      postId: "607e593f6d16dd118c9e86d8",
+      postId: "607fd6ee43ee2600048111ba",
       postDetails: ""
 
     };

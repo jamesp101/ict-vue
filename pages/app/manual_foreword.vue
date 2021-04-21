@@ -12,7 +12,6 @@
 import Post from "~/components/Post.vue";
 export default {
   components: { Post },
-  head: { title: "I. Foreword" },
   layout: "app",
   data() {
     return {

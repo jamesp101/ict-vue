@@ -1,11 +1,13 @@
 <template>
   <div class="post-page">
+    <div class="has-background-primary has-text-white p-5"> 
     <h1 class="is-size-3">
       <b>{{classInfo.subject}}</b>
     </h1>
     <h1 class="is-size-4">{{classInfo.yearLevel}} - {{classInfo.section}}</h1>
     <h1 class="is-size-5">{{classInfo.lastname}}, {{classInfo.firstname}} {{classInfo.middlename}}</h1>
     <h1 class="is-size-6">{{classInfo.schedule}}</h1>
+    </div>
     <template v-if="this.$auth.user.message.access == 4">
       <div class="is-pulled-right mr-6">
         <b-button icon-left="pencil" type="is-primary" @click="isEdit = true" label="Edit"></b-button>

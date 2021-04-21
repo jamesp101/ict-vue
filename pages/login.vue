@@ -1,13 +1,17 @@
 <template>
-  <div class="hero is-fullwidth is-fullheight is-primary">
+  <div class="hero is-fullwidth is-fullheight has-background-dark">
     <div class="hero-body columns is-centered">
-      <div class="column is-centered is-two-fifths">
+      <div class="column is-centered is-offset-6 is-two-fifths">
         <div class="box mt-4">
           <div class="box has-text-centered">
-          <img src="/bnhs-logo-256.png" alt />
+          <img src="/ICTManual/images/vnhs.png" class="custom-image"  alt />
+          </div>
+          <div class="has-text-centered">
+            <h1 class="is-size-4"> <b>VNHS Login Page</b> </h1>
           </div>
 
           <b-field label="Login" />
+
           <b-input
             icon="account"
             value
@@ -24,11 +28,8 @@
             v-model="login.password"
           />
 
-          <b-field label="" class="has-text-centered mt-4">
-            <b-checkbox class="">Remember me?</b-checkbox>
-          </b-field>
 
-          <b-field label="" class="">
+          <b-field label="" class="mt-6">
             <b-button
               @click="userLogin"
               type="is-primary"
@@ -36,9 +37,6 @@
             >
               Login
             </b-button>
-          </b-field>
-          <b-field label="" class="has-text-centered">
-            <nuxt-link to="Login">Forgot Password?</nuxt-link>
           </b-field>
         </div>
       </div>
@@ -89,4 +87,10 @@ export default {
   }
 };
 </script>
+
+<style  scoped>
+.custom-image{
+  height:10rem;
+}
+</style>
 

@@ -178,13 +178,17 @@ export default {
   background: white;
   h {
     &1 {
-      font-size: 26pt;
+      font-size: 20pt;
+      color: black;
     }
     &2 {
-      font-size: 20pt;
+      font-size: 15pt;
+      color: black;
     }
     &3 {
-      font-size: 16pt;
+      font-size: 13pt;
+      font-weight: bold;
+      color: black;
     }
   }
   ul {

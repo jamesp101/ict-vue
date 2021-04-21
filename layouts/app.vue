@@ -7,10 +7,11 @@
         :mobile="mobile"
         :expand-on-hover="expandOnHover"
         :reduce="reduce"
-        type="is-light"
+        type="is-dark"
         :fullheight="fullheight"
         :expand-on-hover-fixed="expandOnHoverFixed"
         open
+        class="has-text-white"
       >
         <div>
           <div class="block has-text-centered">
@@ -34,9 +35,9 @@
                    </NuxtLink>
             </li>-->
             <b-menu-list label="Menu">
-              <li v-for="(item,key) of menu" :key="key">
-                <NuxtLink :to="item.to" exact-active-class="is-active">
-                  <b-icon :icon="item.icon" size="is-small" />
+              <li v-for="(item,key) of menu" :key="key"  class="has-text-white">
+                <NuxtLink :to="item.to" exact-active-class="is-active" class="has-text-white">
+                  <b-icon :icon="item.icon" size="is-small"  />
                   <span>{{item.title}}</span>
                 </NuxtLink>
               </li>
@@ -44,15 +45,16 @@
             <!-- manual -->
             <b-menu-list label="Manual">
               <b-menu-item expanded label="ICT Manual">
-                <li v-for="(item,key) of manual" :key="key">
-                  <NuxtLink :to="item.to" exact-active-class="is-active">
+                <li v-for="(item,key) of manual" :key="key" class="has-text-light">
+                  <NuxtLink :to="item.to" exact-active-class="is-active" class="has-text-light">
                     <b-icon :icon="item.icon" size="is-small" />
                     <span>{{item.title}}</span>
                   </NuxtLink>
                 </li>
                 <li>
                   <a
-                    href="https://docs.google.com/document/d/1XJ8n9cK4d9qlbPcwnqoIduhMfje1c7GXyTwPBy5We6I/edit?usp=sharing"
+                    href="https://drive.google.com/file/d/1JBsGpOui_fd-zrVqcNA9LFWvBIXVNnxa/view?usp=sharing"
+                    class="has-text-light"
                   >
                     <b-icon icon="download" size="is-small" />
                     <span>Download</span>
@@ -65,7 +67,7 @@
             <!-- Admin -->
             <b-menu-list label="Admin" v-if="access == 4">
               <li v-for="(item,key) of admin" :key="key">
-                <NuxtLink :to="item.to" exact-active-class="is-active">
+                <NuxtLink :to="item.to" exact-active-class="is-active" class="has-text-white">
                   <b-icon :icon="item.icon" size="is-small" />
                   <span>{{item.title}}</span>
                 </NuxtLink>
@@ -76,13 +78,13 @@
 
             <b-menu-list label="Account">
               <li v-for="(item,key) of account" :key="key">
-                <NuxtLink :to="item.to" exact-active-class="is-active">
+                <NuxtLink :to="item.to" exact-active-class="is-active" class="has-text-white">
                   <b-icon :icon="item.icon" size="is-small" />
                   <span>{{item.title}}</span>
                 </NuxtLink>
               </li>
               <li>
-                <a @click="logout">
+                <a @click="logout" class="has-text-white">
                   <b-icon icon="exit-to-app" size="is-small" />
                   <span>Logout</span>
                 </a>
