@@ -1,10 +1,11 @@
 <template>
-  <div class="hero is-fullwidth is-fullheight is-primary">
+  <div class="hero is-fullwidth is-fullheight">
     <div class="hero-body columns is-centered">
       <div class="column is-centered is-two-fifths">
         <div class="box mt-4">
           <div class="box has-text-centered">
-          <img src="/bnhs-logo-256.png" alt />
+          <img src="https://www.aclcbukidnon.com/Account/ACLCLogo.png" class="custom-img" alt />
+          
           </div>
 
           <b-field label="Login" />
@@ -89,4 +90,12 @@ export default {
   }
 };
 </script>
+
+<style  lang="scss" scoped>
+.custom-img{
+  height: 150px;
+}
+
+
+</style>
 

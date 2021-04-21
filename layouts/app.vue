@@ -7,7 +7,6 @@
         :mobile="mobile"
         :expand-on-hover="expandOnHover"
         :reduce="reduce"
-        type="is-light"
         :fullheight="fullheight"
         :expand-on-hover-fixed="expandOnHoverFixed"
         open
@@ -15,8 +14,8 @@
         <div>
           <div class="block has-text-centered">
             <!-- TODO: Insert profile image -->
-            <img src="/bnhs-logo-128.png" class="is-image is-128x128 is-rounded" alt />
-            <h1 class="is-size-5">{{ user.firstname + ' ' + user.lastname }}</h1>
+            <img src="https://www.aclcbukidnon.com/Account/ACLCLogo.png" class="is-image is-128x128 is-rounded has-background-white" alt />
+            <h1 class="is-size-5 has-text-white">{{ user.firstname + ' ' + user.lastname }}</h1>
           </div>
           <b-menu class="is-custom-mobile">
             <!-- <b-menu-list label="Menu">
@@ -35,23 +34,24 @@
             </li>-->
             <b-menu-list label="Menu">
               <li v-for="(item,key) of menu" :key="key">
-                <NuxtLink :to="item.to" exact-active-class="is-active">
+                <NuxtLink class="" :to="item.to" exact-active-class="button is-warning">
                   <b-icon :icon="item.icon" size="is-small" />
                   <span>{{item.title}}</span>
                 </NuxtLink>
               </li>
             </b-menu-list>
             <!-- manual -->
-            <b-menu-list label="Manual">
+            <b-menu-list label="Manual" class="is-text-white">
               <b-menu-item expanded label="ICT Manual">
                 <li v-for="(item,key) of manual" :key="key">
-                  <NuxtLink :to="item.to" exact-active-class="is-active">
+                  <NuxtLink :to="item.to" class="" exact-active-class="button is-warning">
                     <b-icon :icon="item.icon" size="is-small" />
                     <span>{{item.title}}</span>
                   </NuxtLink>
                 </li>
-                <li>
+                <li >
                   <a
+                  class="button is-primary"
                     href="https://docs.google.com/document/d/1XJ8n9cK4d9qlbPcwnqoIduhMfje1c7GXyTwPBy5We6I/edit?usp=sharing"
                   >
                     <b-icon icon="download" size="is-small" />
@@ -65,7 +65,7 @@
             <!-- Admin -->
             <b-menu-list label="Admin" v-if="access == 4">
               <li v-for="(item,key) of admin" :key="key">
-                <NuxtLink :to="item.to" exact-active-class="is-active">
+                <NuxtLink :to="item.to" class="" exact-active-class="button is-warning">
                   <b-icon :icon="item.icon" size="is-small" />
                   <span>{{item.title}}</span>
                 </NuxtLink>
@@ -76,13 +76,13 @@
 
             <b-menu-list label="Account">
               <li v-for="(item,key) of account" :key="key">
-                <NuxtLink :to="item.to" exact-active-class="is-active">
+                <NuxtLink :to="item.to" class="" exact-active-class="button is-warning">
                   <b-icon :icon="item.icon" size="is-small" />
                   <span>{{item.title}}</span>
                 </NuxtLink>
               </li>
               <li>
-                <a @click="logout">
+                <a @click="logout" class="button is-primary" >
                   <b-icon icon="exit-to-app" size="is-small" />
                   <span>Logout</span>
                 </a>
