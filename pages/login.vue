@@ -3,9 +3,6 @@
     <div class="hero-body columns is-centered">
       <div class="column is-centered is-two-fifths">
         <div class="box mt-4">
-          <div class="box has-text-centered">
-          <img src="/bnhs-logo-256.png" alt />
-          </div>
 
           <b-field label="Login" />
           <b-input

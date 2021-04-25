@@ -73,7 +73,7 @@ export default {
   },
 
   axios: {
-    baseURL: "https://ict-server.herokuapp.com/"
+    baseURL: "http://localhost:8000"
   },
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

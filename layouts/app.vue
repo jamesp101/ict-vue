@@ -15,7 +15,6 @@
         <div>
           <div class="block has-text-centered">
             <!-- TODO: Insert profile image -->
-            <img src="/bnhs-logo-128.png" class="is-image is-128x128 is-rounded" alt />
             <h1 class="is-size-5">{{ user.firstname + ' ' + user.lastname }}</h1>
           </div>
           <b-menu class="is-custom-mobile">
@@ -42,26 +41,25 @@
               </li>
             </b-menu-list>
             <!-- manual -->
-            <b-menu-list label="Manual">
-              <b-menu-item expanded label="ICT Manual">
-                <li v-for="(item,key) of manual" :key="key">
-                  <NuxtLink :to="item.to" exact-active-class="is-active">
-                    <b-icon :icon="item.icon" size="is-small" />
-                    <span>{{item.title}}</span>
-                  </NuxtLink>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.google.com/document/d/1XJ8n9cK4d9qlbPcwnqoIduhMfje1c7GXyTwPBy5We6I/edit?usp=sharing"
-                  >
-                    <b-icon icon="download" size="is-small" />
-                    <span>Download</span>
-                  </a>
-                </li>
-              </b-menu-item>
-            </b-menu-list>
-            <!-- manual -->
-
+            <!-- <b-menu-list label="Manual">
+                 <b-menu-item expanded label="ICT Manual">
+                 <li v-for="(item,key) of manual" :key="key">
+                 <NuxtLink :to="item.to" exact-active-class="is-active">
+                 <b-icon :icon="item.icon" size="is-small" />
+                 <span>{{item.title}}</span>
+                 </NuxtLink>
+                 </li>
+                 <li>
+                 <a
+                 href="https://docs.google.com/document/d/1XJ8n9cK4d9qlbPcwnqoIduhMfje1c7GXyTwPBy5We6I/edit?usp=sharing"
+                 >
+                 <b-icon icon="download" size="is-small" />
+                 <span>Download</span>
+                 </a>
+                 </li>
+                 </b-menu-item>
+                 </b-menu-list>
+            <!-- manual-->
             <!-- Admin -->
             <b-menu-list label="Admin" v-if="access == 4">
               <li v-for="(item,key) of admin" :key="key">
@@ -117,9 +115,14 @@ export default {
           to: "/app/dashboard",
         },
         {
-          title: "Classroom",
+          title: "Orders",
           icon: "google-classroom",
-          to: "/app/classroom",
+          to: "/app/normal_order",
+        },
+        {
+          title: "Order History",
+          icon: "calendar-range",
+          to: "/app/order_history",
         },
       ],
       manual: [
@@ -160,14 +163,9 @@ export default {
       ],
       admin: [
         {
-          title: "User Management",
+          title: "Order Management",
           icon: "clipboard-account-outline",
-          to: "/app/admin_user",
-        },
-        {
-          title: "Classroom Management",
-          icon: "google-classroom",
-          to: "/app/admin_classroom",
+          to: "/app/orders",
         },
       ],
     };
