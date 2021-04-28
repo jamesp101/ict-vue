@@ -1,19 +1,24 @@
 
 <template>
   <div class="hero is-fullwidth is-fullheight">
-="onHistorySelect"
-              ></b-table>
-              <b-button type="is-primary">Cancel Order</b-button>
-            </div>
-            <div class="column">
-              <h1>Info</h1>
+    <div class="columns is-centered hero-body">
+      <div class="column is-12">
+        <div class="box">
+          <div class="columns is-5">
+            <div class="column is-6">
+              <h1 class="is-size-5">History</h1>
               <b-table
                 striped
                 class="custom-height"
-                :data="cartData"
-                :columns="cartColumn"
-                :selected.sync="cartSelected"
+                :data="historyData"
+                :columns="historyColumn"
+                :selected.sync="historySelected"
               ></b-table>
+              <b-button type="is-danger" @click="onCancelOrder">Cancel Order</b-button>
+            </div>
+            <div class="column is-6">
+              <h1>Info</h1>
+              <b-table striped class="custom-height" :data="cartData" :columns="cartColumn"></b-table>
               <b-field></b-field>
             </div>
           </div>
@@ -34,7 +39,7 @@ export default {
       historyColumn: [
         {
           field: "id",
-          label: "Code",
+          label: "Order Code",
         },
         {
           field: "orderDate",
@@ -55,7 +60,7 @@ export default {
       cartColumn: [
         {
           field: "id",
-          label: "Code",
+          label: "Product Code",
         },
         {
           field: "productName",
@@ -99,17 +104,46 @@ export default {
       this.cartData = [];
       const res = await this.$axios.get(`/orders/${this.historySelected._id}`);
 
-      console.log(res);
-      for (const i of res.data[0]) {
+      for (const i of res.data[0].productInfo) {
         this.cartData.push({
           _id: i._id,
-
-          id: i.ProductsCode || i.productsCode || i._id,
-          price: i.price,
+          id: i.productCode || i.ProductCode,
+          productCode: i.productCode || i.ProductCode,
+          productName: i.productName || i.ProductName,
+          originalPrice: i.price || i.Price,
+          price: "PHP " + (i.price || i.Price).toFixed(2),
         });
       }
     },
     async onHistorySelect() {
+      this.loadProducts();
+    },
+    async onCancelOrder() {
+      if (!confirm("Are you sure you want to cancel this order?")) {
+        return;
+      }
+      console.log(this.historySelected);
+      const res = await this.$axios.put(`/orders/${this.historySelected.id}`, {
+        status: "Cancelled",
+      });
+      if (res.status != 200) {
+        this.$buefy.notification.open({
+          type: "is-danger",
+          message: `Something went wrong`,
+          hasIcon: true,
+        });
+        return;
+      }
+      this.$buefy.notification.open({
+        type: "is-warning",
+        message: `Order cancellled`,
+        hasIcon: true,
+      });
+      this.loadHistory();
+    },
+  },
+  watch: {
+    historySelected: function (val) {
       this.loadProducts();
     },
   },

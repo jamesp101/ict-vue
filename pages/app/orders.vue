@@ -114,7 +114,7 @@ export default {
       this.isLoading = false;
     },
     clickAdd() {
-      console.log("HelloWOrld");
+      this.$router.push("/app/normal_order");
     },
     clickDelete() {
       console.log("Delete");
